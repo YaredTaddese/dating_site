@@ -3,8 +3,8 @@ require_once('../model/Message.php');
 
 class MessageHandler{
     
-    public $currentNIndex = 0;
-    public $currentPIndex = 0;
+    public $currentNIndex = 0;      //current normal message index
+    public $currentPIndex = 0;      //current post message index
     
     public function getNormalMessages($loaderEmail,$preferredEmail,$more=false,$index=0,$number=4)
         {
@@ -108,6 +108,7 @@ class MessageHandler{
              $db->close();
              
              $this->currentPIndex = $this->currentPIndex + $number;
+             
              return $messages;
         }
         
@@ -190,8 +191,7 @@ class MessageHandler{
              $result->free();
              $db->close();
              
-             return $messages;
-             
+             return $messages; 
         }
 
         public function getUnseenMessages($email){
@@ -203,7 +203,7 @@ class MessageHandler{
              }
              
              
-             //check if there are  unseen messages exists with given email and retrieve it
+             //check if there are unseen messages exists with given email and retrieve it
              $query = "select * from normalMessage
                        where reciever = '".$email."' and isSeen = '0'   
                        order by time desc";
@@ -248,7 +248,5 @@ class MessageHandler{
              return $message;
         }
         
-             
-
 }
 ?>

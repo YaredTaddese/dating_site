@@ -99,8 +99,8 @@ class ProfileHandler{
          }
          
          $heightArray = array(); // height specifications
-         $query = "select profile.email,profile.location from profile,profileinformation 
-                  where profile.email = profileinformation.infoEmail";
+         $query = "select profile.email,profile.location from profile,profileInformation 
+                  where profile.email = profileInformation.infoEmail";
         if(!empty($_GET['initialAge'])){
             if(!empty($_GET['finalAge']) && (intval($_GET['finalAge']) < intval($_GET['initialAge']))){
                 $initialAge = intval($_GET['finalAge']) * 365 * 24 * 3600;
@@ -125,7 +125,7 @@ class ProfileHandler{
         }
         if(!empty($_GET['religion'])){
             $religion = $_GET['religion'];
-            $query .= " and profileinformation.religion = '$religion'";
+            $query .= " and profileInformation.religion = '$religion'";
         }
         if(!empty($_GET['location'])){
             $location = $_GET['location'];
@@ -133,7 +133,7 @@ class ProfileHandler{
         }
         if(!empty($_GET['mStatus'])){
             $mStatus = $_GET['mStatus'];
-            $query .= " and profileinformation.mStatus = '$mStatus'";
+            $query .= " and profileInformation.mStatus = '$mStatus'";
         }
         if(!empty($_GET['initialHeight']) && !empty($_GET['finalHeight'])){
             $initialHeight = array_search($_GET['initialHeight'],$heightArray);
@@ -147,7 +147,7 @@ class ProfileHandler{
             $heightArray = array_slice($heightArray,$initialHeight,$length);
             
             $heightSet = $this->changeToSet($heightArray);
-            $query .= " and profileinformation.height in $heightSet";
+            $query .= " and profileInformation.height in $heightSet";
         }
         else if(!empty($_GET['initialHeight'])){
             $initialHeight = array_search($_GET['initialHeight'],$heightArray);
@@ -155,7 +155,7 @@ class ProfileHandler{
             $heightArray = array_slice($heightArray,$initialHeight,$length);
 
             $heightSet = $this->changeToSet($heightArray);
-            $query .= " and profileinformation.height in $heightSet"; 
+            $query .= " and profileInformation.height in $heightSet"; 
         }
         else if(!empty($_GET['finalHeight'])){
             $finalHeight = array_search($_GET['finalHeight'],$heightArray);
@@ -163,31 +163,31 @@ class ProfileHandler{
             $heightArray = array_slice($heightArray,0,$length);
 
             $heightSet = $this->changeToSet($heightArray);
-            $query .= " and profileinformation.height in $heightSet"; 
+            $query .= " and profileInformation.height in $heightSet"; 
         }
         if(!empty($_GET['build'])){
             $build = $_GET['build'];
-            $query .= " and profileinformation.build = '$build'";
+            $query .= " and profileInformation.build = '$build'";
         }
         if(!empty($_GET['education'])){
             $education = $_GET['education'];
-            $query .= " and profileinformation.edcuation = '$education'";
+            $query .= " and profileInformation.edcuation = '$education'";
         }
         if(!empty($_GET['occupation'])){
             $occupation = $_GET['occupation'];
-            $query .= " and profileinformation.occupation = '$occupation'";
+            $query .= " and profileInformation.occupation = '$occupation'";
         }
         if(!empty($_GET['drinking'])){
             $drinking = $_GET['drinking'];
-            $query .= " and profileinformation.drinking = '$drinking'";
+            $query .= " and profileInformation.drinking = '$drinking'";
         }
         if(!empty($_GET['smoking'])){
             $smoking = $_GET['smoking'];
-            $query .= " and profileinformation.smoking = '$smoking'";
+            $query .= " and profileInformation.smoking = '$smoking'";
         }
         if(!empty($_GET['haveChildren'])){
             $haveChildren = $_GET['haveChildren'];
-            $query .= " and profileinformation.haveChildren = '$haveChildren'";
+            $query .= " and profileInformation.haveChildren = '$haveChildren'";
         }
 
         //make query to give only opposite gender results
@@ -227,8 +227,8 @@ class ProfileHandler{
     
     public function getSuggestedProfiles($currentSIndex=0,$number=10){
         $heightArray = array(); // height specifications
-         $query = "select profile.email,profile.location from profile,profileinformation 
-                  where profile.email = profileinformation.infoEmail";
+         $query = "select profile.email,profile.location from profile,profileInformation 
+                  where profile.email = profileInformation.infoEmail";
         if(!empty($self->ageRange[0])){
             if(!empty($self->ageRange[1]) && ($self->ageRange[1] < $self->ageRange[0])){
                 $initialAge = intval($self->ageRange[1]) * 365 * 24 * 3600;
@@ -251,7 +251,7 @@ class ProfileHandler{
         }
         if(!empty($self->religion)){
             $religion = $self->religion;
-            $query .= " or profileinformation.religion = '$religion'";
+            $query .= " or profileInformation.religion = '$religion'";
         }
         if(!empty($self->location)){
             $location = $self->location;
@@ -260,7 +260,7 @@ class ProfileHandler{
         
         if(!empty($self->mStatus)){
             $mStatus = $self->mStatus;
-            $query .= " or profileinformation.mStatus = '$mStatus'";
+            $query .= " or profileInformation.mStatus = '$mStatus'";
         }
         if(!empty($self->heightRange[0]) && !empty($self->heightRange[1])){
             $initialHeight = array_search($self->heightRange[0],$heightArray);
@@ -274,7 +274,7 @@ class ProfileHandler{
             $heightArray = array_slice($heightArray,$initialHeight,$length);
             
             $heightSet = $this->changeToSet($heightArray);
-            $query .= " or profileinformation.height in $heightSet";
+            $query .= " or profileInformation.height in $heightSet";
         }
         else if(!empty($self->heightRange[0])){
             $initialHeight = array_search($self->heightRange[0],$heightArray);
@@ -282,7 +282,7 @@ class ProfileHandler{
             $heightArray = array_slice($heightArray,$initialHeight,$length);
 
             $heightSet = $this->changeToSet($heightArray);
-            $query .= " or profileinformation.height in $heightSet"; 
+            $query .= " or profileInformation.height in $heightSet"; 
         }
         else if(!empty($self->heightRange[1])){
             $finalHeight = array_search($self->heightRange[1],$heightArray);
@@ -290,31 +290,31 @@ class ProfileHandler{
             $heightArray = array_slice($heightArray,0,$length);
 
             $heightSet = $this->changeToSet($heightArray);
-            $query .= " or profileinformation.height in $heightSet"; 
+            $query .= " or profileInformation.height in $heightSet"; 
         }
         if(!empty($self->build)){
             $build = $self->build;
-            $query .= " or profileinformation.build = '$build'";
+            $query .= " or profileInformation.build = '$build'";
         }
         if(!empty($self->education)){
             $education = $self->education;
-            $query .= " or profileinformation.edcuation = '$education'";
+            $query .= " or profileInformation.edcuation = '$education'";
         }
         if(!empty($self->occupation)){
             $occupation = $self->occupation;
-            $query .= " or profileinformation.occupation = '$occupation'";
+            $query .= " or profileInformation.occupation = '$occupation'";
         }
         if(!empty($self->drinking)){
             $drinking = $self->drinking;
-            $query .= " or profileinformation.drinking = '$drinking'";
+            $query .= " or profileInformation.drinking = '$drinking'";
         }
         if(!empty($self->smoking)){
             $smoking = $self->smoking;
-            $query .= " or profileinformation.smoking = '$smoking'";
+            $query .= " or profileInformation.smoking = '$smoking'";
         }
         if(!empty($self->haveChildren)){
             $haveChildren = $self->haveChildren;
-            $query .= " or profileinformation.haveChildren = '$haveChildren'";
+            $query .= " or profileInformation.haveChildren = '$haveChildren'";
         }
 
         //make query to give only opposite gender results

@@ -88,17 +88,17 @@ input[type='submit']:hover{
 }
 
 
-#social-medias{
+/*#social-medias{
 	position:relative;
     background-color: green;
     float: right;
     top: 70px;
     right: 16px;
     border-right: 1px black solid; 
-}
+}*/
 
 
-#facebook {
+/*#facebook {
 	display:block;
 	position: absolute;
 	top: 4px;
@@ -139,7 +139,7 @@ input[type='submit']:hover{
 	height: 32px;
 	background: url('../images/sprite.png') -191px 0;
 	
-}
+}*/
 
 #footer {
     background-color:black;

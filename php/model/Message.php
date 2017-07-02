@@ -144,7 +144,6 @@
             $this->likes = $likes;
         }
 
-
         public function save(){
             //get database and validate connection to database
              $db = getDatabase();
