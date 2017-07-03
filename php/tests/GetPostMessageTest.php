@@ -53,15 +53,15 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
      *************************************************************************************/
     public function currentPIndexProvider(){
         return [
-            "unreasonable" => [6, array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "another" => [0, array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "1" => [6, array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
+            "2" => [0, array("wef yelem"), "getch@gmail.com", false, 0, 6]
         ];
 
     }
 
     public function messagesProvider(){
         return [
-            "unreasonable" => [
+            "1" => [
                 [
                     new PostMessage(
                         "meli@gmail.com", 
@@ -135,29 +135,83 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
      *************************************************************************************/
      public function notNegativeProvider(){
         return [
-            "unreasonable" => [6, array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "another" => [0, array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "1" => [6, array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
+            "2" => [0, array("wef yelem"), "getch@gmail.com", false, 0, 6]
         ];
      }
 
      public function notGreaterThanLimitProvider(){
         return [
-            "unreasonable" => [ array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "another" => [ array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "1" => [ array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
+            "2" => [ array("wef yelem"), "getch@gmail.com", false, 0, 6]
         ];
      }
 
      public function isValidProvider(){
         return [
-            "unreasonable" => [ array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "another" => [ array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "1" => [ array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
+            "2" => [ array("wef yelem"), "getch@gmail.com", false, 0, 6]
         ];
      }
 
      public function onlyPostsProvider(){
         return [
-            "unreasonable" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "another" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "1" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
+            "2" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
+        ];
+     }
+
+     /*************************************************************************************
+     * Data Flow Testing                                                                  *
+     *************************************************************************************/
+     /**
+      * @dataProvider notToBeInitializedProvider 
+      */
+     public function testMessagesShouldNotBeInitialized($nominees, $email, $more, $index, $length){
+        self::$nominees = $nominees;
+        $messages = $this->mh->getPostMessages($email, $more, $index, $length);
+        $this->assertNull($messages);
+     }
+
+     /**
+      * @dataProvider shouldBeEmptyProvider 
+      */
+     public function testMessagesShouldBeEmpty($nominees, $email, $more, $index, $length){
+        self::$nominees = $nominees;
+        $messages = $this->mh->getPostMessages($email, $more, $index, $length);
+        $this->assertEquals(array(), $messages);
+     }
+
+     /**
+      * @dataProvider shouldNotBeEmptyProvider 
+      */
+     public function testMessagesShouldNotBeEmpty($nominees, $email, $more, $index, $length){
+        self::$nominees = $nominees;
+        $messages = $this->mh->getPostMessages($email, $more, $index, $length);
+        $this->assertGreaterThan(0, count($messages));
+     }
+
+     /*************************************************************************************
+     * Data Providers for Data Flow Testing                                               *
+     *************************************************************************************/
+     public function notToBeInitializedProvider(){
+        return [
+            "1" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
+            "2" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
+        ];
+     }
+
+     public function shouldBeEmptyProvider(){
+        return [
+            "1" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
+            "2" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
+        ];
+     }
+
+     public function shouldNotBeEmptyProvider(){
+        return [
+            "1" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
+            "2" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
         ];
      }
 }

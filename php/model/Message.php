@@ -186,6 +186,25 @@
              $db->close();
         }
 
+        function delete(){
+            //get database and validate connection to database
+             $db = getDatabase();
+             if(!$db){
+                 echo "<p>can't connect to database in updating postMessage of ".$this->sender."</p>";
+             }
+
+             //update postMessage in database
+             $query = "delete from postMessage
+                       where sender='".$this->sender."' and time='".$this->time."'";
+             $updated = $db->query($query);
+             if(!$updated){
+                 echo "<p>can't delete postMessage from database while deleting postMessage of ".$this->sender."</p>";
+                 exit;
+             }
+
+             $db->close();
+        }
+
         public function getLikers(){
              $delimiter = ",";
              $likers = explode($delimiter,$this->likes);

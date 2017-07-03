@@ -76,7 +76,7 @@
 
     if(!empty($_GET['add']) && !empty($_GET['nemail'])){
             $self->changeNominee($_GET['nemail']);
-        }
+    }
 ?>
 
 <?php

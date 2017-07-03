@@ -57,7 +57,11 @@ class MessageHandler{
                 $this->currentPIndex = 0;
             }
             else{
-                $this->currentPIndex = $index;
+                if ($index >= 0){
+                    $this->currentPIndex = $index;
+                }else{
+                    $this->currentPIndex = 0;
+                }
             }
             
              
@@ -241,12 +245,24 @@ class MessageHandler{
              $query = "select * from postMessage
                        where time = '$time' and sender = '$sender'";
              $result = $db->query($query);
+             if(!$result->num_rows){
+                 return null;       //note that this can also run because of database query is not executed successfully 
+             }
              $row = $result->fetch_assoc();
              $message = new PostMessage(
                      $row['sender'],$row['textContent'],$row['photoContent'],$row['time'],$row['comments'],$row['likes']);
                      
              return $message;
         }
-        
+
+        public function changeLikeState($post, $email){
+            if($post != null){
+               return $post->changeLikeState($email);
+            } else{
+                return null;
+            }
+        }
+
+
 }
 ?>
