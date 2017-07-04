@@ -36,9 +36,9 @@ class ChangeLikeStateTest extends PHPUnit\Framework\TestCase
                         "../../images/ecae32f8eb0933a55cb8bac4ded07711.jpg",
                         1466746516,
                         "",
-                        "yad.tad.yt@gmail.com"
+                        "dani@gmail.com"
                     )
-                , "heni@gmail.com"
+                , "rediet@gmail.com"
             ],
             "unlike a post that is liked by others" =>[
                 false,
@@ -48,9 +48,9 @@ class ChangeLikeStateTest extends PHPUnit\Framework\TestCase
                         "../../images/ecae32f8eb0933a55cb8bac4ded07711.jpg",
                         1466746516,
                         "",
-                        "yad.tad.yt@gmail.com,heni@gmail.com"
+                        "dani@gmail.com,rediet@gmail.com"
                     )
-                , "heni@gmail.com"
+                , "rediet@gmail.com"
             ],
             "like a post that is not liked by anyone" => [
                 true,
@@ -62,7 +62,7 @@ class ChangeLikeStateTest extends PHPUnit\Framework\TestCase
                         "",
                         ""
                     )
-                ,"yad.tad.yt@gmail.com"
+                ,"dani@gmail.com"
             ],
             "unlike a post that is not liked by anyone" => [
                 false,
@@ -72,9 +72,9 @@ class ChangeLikeStateTest extends PHPUnit\Framework\TestCase
                         "../../images/ecae32f8eb0933a55cb8bac4ded07711.jpg",
                         1466746516,
                         "",
-                        "yad.tad.yt@gmail.com"
+                        "dani@gmail.com"
                     )
-                ,"yad.tad.yt@gmail.com"
+                ,"dani@gmail.com"
             ],
             "null message is provided" => [
                 null, null, "whatever@whenever.com"

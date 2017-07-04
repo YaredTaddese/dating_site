@@ -1,0 +1,9 @@
+<phpunit colors="true" >
+	<testsuites>
+		<testsuite name="Regression Test">
+			<directory>
+				./php/tests
+			</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>

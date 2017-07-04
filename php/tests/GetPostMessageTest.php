@@ -53,15 +53,19 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
      *************************************************************************************/
     public function currentPIndexProvider(){
         return [
-            "1" => [6, array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "2" => [0, array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "path1" => [6, array(), "getch@gmail.com", true, -1, 6], 
+            "path2" => [6, array("meli@gmail.com"), "getch@gmail.com", false, 0, 6],
+            "path3" => [
+                 6, array("meli@gmail.com", "samrawit@gmail.com")
+                  , "getasew@gmail.com", true, 0, 6
+            ]
         ];
 
     }
 
     public function messagesProvider(){
         return [
-            "1" => [
+            "path1" => [
                 [
                     new PostMessage(
                         "meli@gmail.com", 
@@ -69,10 +73,11 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
                         "../../images/ecae32f8eb0933a55cb8bac4ded07711.jpg",
                         1466746516,
                         "",
-                        "yad.tad.yt@gmail.com")
-                ], array("meli@gmail.com"), "getch@gmail.com", false, 0, 6
+                        "yad.tad.yt@gmail.com"
+                    )
+                ], array(), "getch@gmail.com", true, -1, 6
             ],
-            "other" => [
+            "path2" => [
                 [
                     new PostMessage(
                         "meli@gmail.com", 
@@ -84,6 +89,28 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
                     )
                 ]
                 , array("meli@gmail.com"), "getch@gmail.com", false, 0, 6
+            ],
+            "path3" => [
+                [
+                    new PostMessage(
+                        "samrawit@gmail.com", 
+                        "",
+                        "../../images/e7742709a7bd07a63c8bb8d5898d79e9.jpg",
+                        1466841980,
+                        "",
+                        ""
+                    ),
+                    new PostMessage(
+                        "meli@gmail.com", 
+                        "Sometimes, anything doesn't make sense & sometimes, everything does. What a crazy world??!!!",
+                        "../../images/ecae32f8eb0933a55cb8bac4ded07711.jpg",
+                        1466746516,
+                        "",
+                        "yad.tad.yt@gmail.com"
+                    )
+                ]
+                , array("meli@gmail.com", "samrawit@gmail.com")
+                , "getasew@gmail.com", true, 0, 6
             ]
         ];
     }       
@@ -94,10 +121,10 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
      /**
       * @dataProvider notNegativeProvider 
       */
-     public function testCurrentPIndexIsNotNegative($expected, $nominees, $email, $more, $index, $length){
+     public function testCurrentPIndexIsNotNegative($nominees, $email, $more, $index, $length){
         self::$nominees = $nominees;
         $messages = $this->mh->getPostMessages($email, $more, $index, $length);
-        $this->assertGreaterThanorEqual($expected, $this->mh->currentPIndex);
+        $this->assertGreaterThanorEqual(0, $this->mh->currentPIndex);
      }
 
      /**
@@ -135,29 +162,43 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
      *************************************************************************************/
      public function notNegativeProvider(){
         return [
-            "1" => [6, array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "2" => [0, array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "boundary negative index" => [ array(), "getch@gmail.com", true, -1, 6 ],
+            "non-boundary negative index" => [ array(), "getch@gmail.com", true, -100, 6 ]
         ];
      }
 
      public function notGreaterThanLimitProvider(){
         return [
-            "1" => [ array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "2" => [ array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "boundary value for limit" => [ 
+                    array("meli@gmail.com"), "getch@gmail.com", true, 0, 1
+                ], 
+            "non-boundary value for limit" => [ 
+                    array("meli@gmail.com"), "getch@gmail.com", true, 0, 6
+                ]
         ];
      }
 
      public function isValidProvider(){
         return [
-            "1" => [ array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "2" => [ array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "could be index" => [ array(), "getch@gmail.com", true, 0, 2], 
+            "could be 0" => [ array(), "getch@gmail.com", false, 0, 6],
+            "could be index + length" => [ array("meli@gmail.com"), "getch@gmail.com", true, 0, 6 ],
+            "could be length" => [ array("meli@gmail.com"), "getch@gmail.com", false, 0, 6 ]
         ];
      }
 
      public function onlyPostsProvider(){
         return [
-            "1" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "2" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "could be null" => [
+                    array(), "getch@gmail.com", false, 0, 6
+                ], 
+            "could contain single element" => [
+                    array("meli@gmail.com"), "getch@gmail.com", false, 0, 6
+                ],
+            "could contain multiple element" => [
+                    array("meli@gmail.com", "samrawit@gmail.com"), 
+                    "getasew@gmail.com", false, 0, 6
+                ],
         ];
      }
 
@@ -196,22 +237,33 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
      *************************************************************************************/
      public function notToBeInitializedProvider(){
         return [
-            "1" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "2" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "with no nominee provided" => [
+                    array(), "rediet@gmail.com", false, 0, 6
+                ], 
+            "with nominee provided" => [
+                    array("getch@gmail.com"), "rediet@gmail.com", false, 0, 6
+            ],
         ];
      }
 
      public function shouldBeEmptyProvider(){
         return [
-            "1" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "2" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            /* 
+                Infeasible variable state was anticipated.
+                Refactoring of the source code should be issued.
+            */
         ];
      }
 
      public function shouldNotBeEmptyProvider(){
         return [
-            "1" => [array("meli@gmail.com"), "getch@gmail.com", false, 0, 6], 
-            "2" => [array("wef yelem"), "getch@gmail.com", false, 0, 6]
+            "could contain single element" => [
+                    array("meli@gmail.com"), "getch@gmail.com", false, 0, 6
+                ],
+            "could contain multiple elements" => [
+                    array("meli@gmail.com", "samrawit@gmail.com"), 
+                    "getasew@gmail.com", false, 0, 6
+                ],
         ];
      }
 }

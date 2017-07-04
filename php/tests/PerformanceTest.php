@@ -4,7 +4,7 @@ require_once "../controller/MessageHandler.php";
 require_once "../model/ProfileInfo.php";
 require_once "../model/Profile.php";
 
-class ShowPostMessageTest extends PHPUnit\Framework\TestCase
+class PerformanceTest extends PHPUnit\Extensions\PerformanceTestCase
 {
     public static $nominees;
 
@@ -14,18 +14,24 @@ class ShowPostMessageTest extends PHPUnit\Framework\TestCase
     }
 
     /*********************************************************************
-     * Blackbox Testing                                                *
+     * Functional Testing (Performance Testing)                          *
      *********************************************************************/
+     // test page load performance
+    public function testPageLoad(){
+        $this->setMaxRunningTime(2);
+        header("Location: ../../index.html");
+    }
+
     /**
      * @dataProvider showPostedMessagesProvider
      */
     public function testPostedMessagesContent($expected, $email, $more, $index, $length){
+        $this->setMaxRunningTime(2);
         $messages = $this->mh->getPostMessages($email, $more, $index, $length);
-        $this->assertEquals($expected, $messages);
     }
 
     /*************************************************************************************
-     * Data Providers for Blackbox Testing                                             *
+     * Data Providers for Functional Testing (Performance Testing)                       *
      *************************************************************************************/
     public function showPostedMessagesProvider(){
         return [
