@@ -1,5 +1,7 @@
 <?php
-
+/**********************************************************************
+ * Unit Test on loadPostedMessages method                              *
+ *********************************************************************/
 require_once "../controller/MessageHandler.php";
 
 class LoadPostMessageTest extends PHPUnit\Framework\TestCase

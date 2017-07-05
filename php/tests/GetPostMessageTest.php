@@ -1,5 +1,7 @@
 <?php
-
+/**********************************************************************
+ * Unit Test on getPostedMessages method                              *
+ *********************************************************************/
 require_once "../controller/MessageHandler.php";
 require_once "../model/ProfileInfo.php";
 require_once "../model/Profile.php";
@@ -18,6 +20,8 @@ class GetPostMessageTest extends PHPUnit\Framework\TestCase
              ->willReturn(self::$nominees);
     
         $this->mh = new MessageHandler();
+        
+        //$this->mh->profile = $profile;
     }
 
     public function tearDown(){

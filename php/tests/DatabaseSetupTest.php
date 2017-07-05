@@ -1,5 +1,7 @@
 <?php
-
+/*********************************************************************
+ * Sort of Basic Testing                                              *
+ *********************************************************************/
 require_once "../util/connection.php";
 
 class DatabaseSetupTest extends PHPUnit\Framework\TestCase
